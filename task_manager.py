@@ -1,9 +1,7 @@
+from singleton import Singleton
+
 class TaskManager: 
-    _instance = None 
-    def __new__(cls, *args, **kwargs): 
-        if cls._instance is None: 
-            cls._instance = super().__new__(cls) 
-        return cls._instance 
+    __metaclass__ = Singleton
          
     def __init__(self, mirror=False, task="none"):
         self.mirror = mirror

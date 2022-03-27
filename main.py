@@ -149,7 +149,6 @@ class VideoTransformTrack(MediaStreamTrack):
 
             return new_frame
         else:
-            # perform edge detection
             img = frame.to_ndarray(format="bgr24")
             # Mirror image for selfie
             if self.task_manager.mirror:
