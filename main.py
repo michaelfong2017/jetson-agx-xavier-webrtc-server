@@ -180,13 +180,13 @@ async def offer(request):
 
     pc = RTCPeerConnection(
         RTCConfiguration(
-            iceServers=[
-                RTCIceServer(
-                    urls="turn:16.163.180.160:3478",
-                    username=USER,
-                    credential=CREDENTIAL,
-                )
-            ]
+            # iceServers=[
+            #     RTCIceServer(
+            #         urls="turn:16.163.180.160:3478",
+            #         username=USER,
+            #         credential=CREDENTIAL,
+            #     )
+            # ]
         )
     )
     pc_id = "PeerConnection(%s)" % uuid.uuid4()
