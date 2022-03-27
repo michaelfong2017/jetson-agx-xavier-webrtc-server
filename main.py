@@ -220,9 +220,10 @@ async def offer(request):
         if track.kind == "audio":
             recorder.addTrack(track)
         elif track.kind == "video":
+            task_manager = TaskManager(mirror=json.loads(params["mirror"].lower()), task=params["video_transform"])
             pc.addTrack(
                 VideoTransformTrack(
-                    relay.subscribe(track), mirror=json.loads(params["mirror"].lower()), task_manager=TaskManager(params["video_transform"])
+                    relay.subscribe(track), task_manager=task_manager
                 )
             )
 
