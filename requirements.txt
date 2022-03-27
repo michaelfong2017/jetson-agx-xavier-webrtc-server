@@ -1,0 +1,7 @@
+aiohttp==3.7.4.post0
+aioice==0.7.5
+aiortc==1.2.0
+cryptography==3.4.7
+gunicorn
+aiohttp_cors
+pandas
