@@ -1,6 +1,6 @@
 from singleton import Singleton
 
-class TaskManager: 
+class TaskManager(object): 
     __metaclass__ = Singleton
          
     def __init__(self, mirror=False, task="none"):
