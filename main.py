@@ -318,6 +318,7 @@ app.router.add_get("/", index)
 app.router.add_get("/client.js", javascript)
 app.router.add_post("/offer", offer)
 app.router.add_post("/new-ice-candidate", new_ice_candidate)
+app.router.add_post("/set-mirror", set_mirror)
 app.router.add_post("/set-task", set_task)
 
 for route in list(app.router.routes()):
