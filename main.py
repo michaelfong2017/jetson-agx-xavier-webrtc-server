@@ -284,11 +284,12 @@ async def new_ice_candidate(request):
 async def set_mirror(request):
     params = await request.json()
     task_manager = TaskManager()
-    task_manager.set_mirror(params["mirror"])
+    mirror = True if params["mirror"] == "true" else False if params["mirror"] == "false" else None
+    task_manager.set_mirror(mirror)
     return web.Response(
         content_type="application/json",
         text=json.dumps(
-            {"mirror_received": params["mirror"]}
+            {"mirror_received": mirror}
         ),
     )
 
