@@ -41,10 +41,9 @@ class VideoTransformTrack(MediaStreamTrack):
 
     kind = "video"
 
-    def __init__(self, track, mirror, task_manager):
+    def __init__(self, track, task_manager):
         super().__init__()  # don't forget this!
         self.track = track
-        self.mirror = mirror
         self.task_manager = task_manager
 
         self.detector = Detector()
@@ -80,7 +79,7 @@ class VideoTransformTrack(MediaStreamTrack):
                 pass
 
             # Mirror image for selfie
-            if self.mirror:
+            if self.task_manager.mirror:
                 img = cv2.flip(img, 1)
 
             # rebuild a VideoFrame, preserving timing information
@@ -94,7 +93,7 @@ class VideoTransformTrack(MediaStreamTrack):
             img = cv2.cvtColor(cv2.Canny(img, 100, 200), cv2.COLOR_GRAY2BGR)
 
             # Mirror image for selfie
-            if self.mirror:
+            if self.task_manager.mirror:
                 img = cv2.flip(img, 1)
 
             # rebuild a VideoFrame, preserving timing information
@@ -110,7 +109,7 @@ class VideoTransformTrack(MediaStreamTrack):
             img = cv2.warpAffine(img, M, (cols, rows))
 
             # Mirror image for selfie
-            if self.mirror:
+            if self.task_manager.mirror:
                 img = cv2.flip(img, 1)
             
             # rebuild a VideoFrame, preserving timing information
@@ -137,7 +136,7 @@ class VideoTransformTrack(MediaStreamTrack):
             ts = te
 
             # Mirror image for selfie
-            if self.mirror:
+            if self.task_manager.mirror:
                 img = cv2.flip(img, 1)
 
             # rebuild a VideoFrame, preserving timing information
@@ -153,7 +152,7 @@ class VideoTransformTrack(MediaStreamTrack):
             # perform edge detection
             img = frame.to_ndarray(format="bgr24")
             # Mirror image for selfie
-            if self.mirror:
+            if self.task_manager.mirror:
                 img = cv2.flip(img, 1)
 
             # rebuild a VideoFrame, preserving timing information
@@ -277,6 +276,18 @@ async def new_ice_candidate(request):
         content_type="application/json",
         text=json.dumps(
             {"pc_id": pc_id}
+        ),
+    )
+
+
+async def set_mirror(request):
+    params = await request.json()
+    task_manager = TaskManager()
+    task_manager.set_mirror(params["mirror"])
+    return web.Response(
+        content_type="application/json",
+        text=json.dumps(
+            {"mirror_received": params["mirror"]}
         ),
     )
 
